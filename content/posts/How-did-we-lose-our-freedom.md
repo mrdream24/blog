@@ -2,6 +2,9 @@
 date = '2025-02-05T09:15:21Z'
 draft = false
 title = '德国人如何失去自由：从1933到1945'
+categories = ["历史"]
+tags = ["翻译", "历史"]
+series = ["翻译", ""]
 +++
 
 > 翻译自 https://press.uchicago.edu/Misc/Chicago/511928.htm
