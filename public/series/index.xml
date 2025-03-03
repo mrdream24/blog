@@ -7,19 +7,19 @@
     <generator>Hugo</generator>
     <language>zh-cn</language>
     <copyright>© 2025, MrDream24</copyright>
-    <lastBuildDate>Wed, 05 Feb 2025 09:15:21 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 16 Feb 2025 09:15:21 +0000</lastBuildDate>
     <atom:link href="/series/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>DeepSeek</title>
       <link>/series/deepseek/</link>
-      <pubDate>Wed, 05 Feb 2025 09:15:21 +0000</pubDate>
+      <pubDate>Sun, 16 Feb 2025 09:15:21 +0000</pubDate>
       <guid>/series/deepseek/</guid>
       <description></description>
     </item>
     <item>
       <title>游戏</title>
       <link>/series/%E6%B8%B8%E6%88%8F/</link>
-      <pubDate>Wed, 05 Feb 2025 09:15:21 +0000</pubDate>
+      <pubDate>Sun, 16 Feb 2025 09:15:21 +0000</pubDate>
       <guid>/series/%E6%B8%B8%E6%88%8F/</guid>
       <description></description>
     </item>
@@ -28,6 +28,20 @@
       <link>/series/%E7%BF%BB%E8%AF%91/</link>
       <pubDate>Wed, 05 Feb 2025 09:15:21 +0000</pubDate>
       <guid>/series/%E7%BF%BB%E8%AF%91/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>NBA</title>
+      <link>/series/nba/</link>
+      <pubDate>Mon, 15 May 2023 05:37:21 +0000</pubDate>
+      <guid>/series/nba/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>日常</title>
+      <link>/series/%E6%97%A5%E5%B8%B8/</link>
+      <pubDate>Mon, 15 May 2023 05:37:21 +0000</pubDate>
+      <guid>/series/%E6%97%A5%E5%B8%B8/</guid>
       <description></description>
     </item>
   </channel>
