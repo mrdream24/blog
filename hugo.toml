@@ -2,3 +2,73 @@ baseURL = '/'
 languageCode = 'zh-cn'
 title = '春华秋实'
 theme = 'paper'
+author = "MrDream24"
+copyright = "© 2025, MrDream24"
+DefaultContentLanguage = "cn"
+enableInlineShortcodes = true
+# prevent build failures when using Hugo's Instagram shortcode due to deprecated Instagram API.
+# See https://github.com/gohugoio/hugo/issues/7228#issuecomment-714490456
+ignoreErrors = ["error-remote-getjson"]
+[pagination]
+  pagerSize = 10
+
+# ------------------------------
+theme = "hugo-paper"
+
+[params]
+  color = 'linen'
+  github = 'mrdream24'
+  instagram = 'mrdream24'
+
+avatar = 'mengxianghui23@gmail.com'
+  name = 'MrDream24'
+  bio = 'Discover fresh context'
+# ------------------------------
+
+# needed to  render raw HTML (e.g. <sub>, <sup>, <kbd>, <mark>)
+[markup]
+  [markup.goldmark]
+    [markup.goldmark.renderer]
+      unsafe = true
+#  [markup.highlight]
+#    lineNos = true
+
+[menu]
+
+  [[menu.main]]
+    identifier = "about"
+    name = "About"
+    url = "/about/"
+    weight = 10
+
+[taxonomies]
+category = "categories"
+tag = "tags"
+series = "series"
+
+[privacy]
+
+  [privacy.vimeo]
+    disabled = false
+    simple = true
+
+  [privacy.x]
+    disabled = false
+    enableDNT = true
+    simple = true
+
+  [privacy.instagram]
+    disabled = false
+    simple = true
+
+  [privacy.youtube]
+    disabled = false
+    privacyEnhanced = true
+
+[services]
+
+  [services.instagram]
+    disableInlineCSS = true
+
+  [services.x]
+    disableInlineCSS = true
