@@ -1,4 +1,4 @@
-baseURL = 'https://blog-mrdream24s-projects.vercel.app/'
+baseURL = '/'
 languageCode = 'zh-cn'
 title = '春华秋实'
 theme = 'paper'
