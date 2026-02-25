@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>🎂 生日礼物大转盘</title>
+  <style>
+    :root {
+      --bg1: #12001f;
+      --bg2: #2b0c51;
+      --gold: #ffd86b;
+      --pink: #ff4ea6;
+      --cyan: #53f6ff;
+      --text: #fff9ef;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: "PingFang SC", "Microsoft YaHei", system-ui, sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at 20% 20%, rgba(255, 78, 166, 0.22), transparent 30%),
+        radial-gradient(circle at 80% 0%, rgba(83, 246, 255, 0.2), transparent 35%),
+        linear-gradient(160deg, var(--bg1), var(--bg2));
+      overflow: hidden;
+    }
+
+    .sparkles {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background-image:
+        radial-gradient(circle, rgba(255,255,255,0.5) 1px, transparent 1px),
+        radial-gradient(circle, rgba(255,216,107,0.45) 1.3px, transparent 1.3px);
+      background-size: 70px 70px, 110px 110px;
+      background-position: 0 0, 30px 40px;
+      animation: floatStars 12s linear infinite;
+      opacity: 0.7;
+    }
+
+    @keyframes floatStars {
+      to { transform: translateY(-70px); }
+    }
+
+    .container {
+      width: min(980px, 92vw);
+      margin: 0 auto;
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      padding: 28px 0 24px;
+      position: relative;
+      z-index: 1;
+    }
+
+    h1 {
+      margin: 0 0 8px;
+      text-align: center;
+      font-size: clamp(1.8rem, 3.4vw, 2.8rem);
+      text-shadow: 0 0 24px rgba(255, 78, 166, 0.58);
+      letter-spacing: 0.06em;
+    }
+
+    .subtitle {
+      margin: 0 0 18px;
+      text-align: center;
+      color: #ffeec5;
+      font-size: clamp(0.95rem, 1.7vw, 1.1rem);
+      opacity: 0.94;
+    }
+
+    .stage {
+      display: grid;
+      grid-template-columns: 1fr;
+      justify-items: center;
+      gap: 18px;
+      width: 100%;
+    }
+
+    .wheel-wrap {
+      position: relative;
+      width: min(78vw, 520px);
+      aspect-ratio: 1 / 1;
+      filter: drop-shadow(0 20px 40px rgba(0, 0, 0, 0.45));
+    }
+
+    .pointer {
+      position: absolute;
+      z-index: 5;
+      left: 50%;
+      top: -16px;
+      transform: translateX(-50%);
+      width: 0;
+      height: 0;
+      border-left: 22px solid transparent;
+      border-right: 22px solid transparent;
+      border-top: 44px solid var(--gold);
+      filter: drop-shadow(0 6px 8px rgba(0, 0, 0, 0.45));
+    }
+
+    .wheel {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      position: relative;
+      border: 8px solid rgba(255, 241, 199, 0.65);
+      background: conic-gradient(
+        #ff6895 0deg 72deg,
+        #ffa657 72deg 144deg,
+        #ffe082 144deg 216deg,
+        #78e08f 216deg 288deg,
+        #74c0ff 288deg 360deg
+      );
+      transition: transform 5.2s cubic-bezier(0.18, 0.97, 0.22, 1);
+    }
+
+    .wheel::before {
+      content: "";
+      position: absolute;
+      inset: 16px;
+      border-radius: 50%;
+      border: 2px dashed rgba(255,255,255,0.38);
+    }
+
+    .hub {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: 84px;
+      aspect-ratio: 1;
+      transform: translate(-50%, -50%);
+      border-radius: 50%;
+      border: 4px solid #fff3cc;
+      background: radial-gradient(circle at 30% 30%, #fff1b3, #ffc04a 70%, #d48400);
+      display: grid;
+      place-items: center;
+      z-index: 4;
+      color: #6a3c00;
+      font-size: 14px;
+      font-weight: 800;
+    }
+
+    .segment-label {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: 46%;
+      transform-origin: 0% 0%;
+      font-size: clamp(0.78rem, 1.6vw, 1.05rem);
+      font-weight: 700;
+      text-shadow: 0 1px 2px rgba(0,0,0,0.38);
+      color: #fff;
+      user-select: none;
+    }
+
+    .controls {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    button {
+      border: none;
+      cursor: pointer;
+      padding: 12px 22px;
+      border-radius: 999px;
+      font-weight: 700;
+      font-size: 1rem;
+      transition: transform .2s, box-shadow .2s;
+    }
+
+    #spinBtn {
+      color: #360419;
+      background: linear-gradient(120deg, #ffd56c, #fff1bf);
+      box-shadow: 0 0 22px rgba(255, 213, 108, 0.55);
+    }
+
+    #resetBtn {
+      color: #fff;
+      background: linear-gradient(120deg, #9d52ff, #5b6dff);
+      box-shadow: 0 0 20px rgba(91,109,255,0.5);
+    }
+
+    button:hover { transform: translateY(-2px) scale(1.02); }
+    button:disabled { cursor: not-allowed; opacity: 0.55; transform: none; }
+
+    .result {
+      min-height: 56px;
+      text-align: center;
+      font-size: clamp(1rem, 2.6vw, 1.35rem);
+      font-weight: 700;
+      color: #ffe9a5;
+      text-shadow: 0 0 18px rgba(255, 216, 107, 0.6);
+      padding: 0 10px;
+    }
+
+    .gifts {
+      margin: 0;
+      padding: 10px 18px;
+      list-style: none;
+      border-radius: 14px;
+      background: rgba(255,255,255,0.08);
+      backdrop-filter: blur(5px);
+      display: grid;
+      gap: 5px;
+      font-size: 0.95rem;
+    }
+
+    .gifts li::before { content: "🎁 "; }
+
+    .burst {
+      position: fixed;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      pointer-events: none;
+      opacity: 0;
+      z-index: 9;
+      animation: confetti 900ms ease-out forwards;
+    }
+
+    @keyframes confetti {
+      0% { transform: translate(0,0) scale(1); opacity: 1; }
+      100% { transform: translate(var(--tx), var(--ty)) scale(0.2); opacity: 0; }
+    }
+  </style>
+</head>
+<body>
+  <div class="sparkles"></div>
+  <div class="container">
+    <div class="stage">
+      <div>
+        <h1>🎂 生日礼物随机抽奖大转盘</h1>
+        <p class="subtitle">今天谁是天选生日锦鲤？转起来看看！</p>
+      </div>
+
+      <div class="wheel-wrap">
+        <div class="pointer"></div>
+        <div class="wheel" id="wheel"></div>
+        <div class="hub">好运
+          <br>加倍</div>
+      </div>
+
+      <div class="controls">
+        <button id="spinBtn">立即抽奖</button>
+        <button id="resetBtn">重置转盘</button>
+      </div>
+
+      <div id="result" class="result">点击“立即抽奖”，看看生日惊喜会是什么 🎉</div>
+
+      <ul class="gifts" id="giftList"></ul>
+    </div>
+  </div>
+
+  <script>
+    const gifts = [
+      '新款 Apple Watch',
+      '大疆 Pocket 3',
+      '公路自行车',
+      '香奈儿眼影',
+      '5000 元现金'
+    ];
+
+    const wheel = document.getElementById('wheel');
+    const result = document.getElementById('result');
+    const spinBtn = document.getElementById('spinBtn');
+    const resetBtn = document.getElementById('resetBtn');
+    const giftList = document.getElementById('giftList');
+
+    const slice = 360 / gifts.length;
+    let currentRotate = 0;
+    let spinning = false;
+
+    gifts.forEach((gift, idx) => {
+      const li = document.createElement('li');
+      li.textContent = gift;
+      giftList.appendChild(li);
+
+      const label = document.createElement('div');
+      label.className = 'segment-label';
+      const angle = idx * slice + slice / 2 - 90;
+      label.style.transform = `rotate(${angle}deg) translate(6%, -50%)`;
+      label.textContent = gift;
+      wheel.appendChild(label);
+    });
+
+    function burst() {
+      for (let i = 0; i < 120; i++) {
+        const dot = document.createElement('span');
+        dot.className = 'burst';
+        dot.style.left = `${window.innerWidth / 2}px`;
+        dot.style.top = `${window.innerHeight * 0.48}px`;
+        dot.style.background = ['#ffd86b','#ff4ea6','#53f6ff','#9d52ff','#ffffff'][i % 5];
+        dot.style.setProperty('--tx', `${(Math.random() - 0.5) * 650}px`);
+        dot.style.setProperty('--ty', `${(Math.random() - 0.5) * 540}px`);
+        document.body.appendChild(dot);
+        dot.addEventListener('animationend', () => dot.remove());
+      }
+    }
+
+    spinBtn.addEventListener('click', () => {
+      if (spinning) return;
+      spinning = true;
+      spinBtn.disabled = true;
+      result.textContent = '大转盘高速旋转中…祝你生日好运爆棚 ✨';
+
+      const winner = Math.floor(Math.random() * gifts.length);
+      const centerAngle = winner * slice + slice / 2;
+      const target = 360 - centerAngle;
+      const rounds = 6 + Math.floor(Math.random() * 3);
+
+      currentRotate += rounds * 360 + target - (currentRotate % 360);
+      wheel.style.transform = `rotate(${currentRotate}deg)`;
+
+      setTimeout(() => {
+        result.textContent = `🎉 恭喜你抽中：${gifts[winner]}！生日快乐，心想事成！`;
+        burst();
+        spinning = false;
+        spinBtn.disabled = false;
+      }, 5300);
+    });
+
+    resetBtn.addEventListener('click', () => {
+      currentRotate = 0;
+      wheel.style.transition = 'transform 0.7s ease';
+      wheel.style.transform = 'rotate(0deg)';
+      result.textContent = '转盘已重置，准备开启下一轮生日惊喜 🎁';
+      setTimeout(() => {
+        wheel.style.transition = 'transform 5.2s cubic-bezier(0.18, 0.97, 0.22, 1)';
+      }, 800);
+    });
+  </script>
+</body>
+</html>
